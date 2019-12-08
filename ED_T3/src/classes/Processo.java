@@ -5,7 +5,6 @@
  */
 package classes;
 
-import java.util.Random;
 
 /**
  *
@@ -16,18 +15,11 @@ public class Processo {
     private final int id;
     private String descricao;
     private TipoProcesso tipo;
-    protected Processo next;
-    public int seconds;
+    protected Processo proximo;
     
     public Processo() {
         controleId++;
         id = controleId;
-    }
-
-    public void geraAleatoriamente() {
-        Random random = new Random();
-        tipo = TipoProcesso.values()[random.nextInt(3)];
-        seconds = random.nextInt(60);
     }
 
     public TipoProcesso getTipo() {
@@ -46,12 +38,12 @@ public class Processo {
         this.descricao = descricao;
     }
 
-    public Processo getNext() {
-        return next;
+    public Processo getProximo() {
+        return proximo;
     }
 
-    public void setNext(Processo next) {
-        this.next = next;
+    public void setProximo(Processo proximo) {
+        this.proximo = proximo;
     }
 
     public int getId() {

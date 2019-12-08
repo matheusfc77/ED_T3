@@ -17,7 +17,7 @@ public class ListaMesa {
         if (this.getInicioLista() == null)
             this.setInicioLista(nova);
         else 
-            this.getFimLista().setNext(nova);
+            this.getFimLista().setProximo(nova);
         this.setFimLista(nova);
     }
     
@@ -29,7 +29,7 @@ public class ListaMesa {
             mesasDisp.append("Mesas de número:");
             while(aux != null) {
                 mesasDisp.append(" ").append(aux.getNumero());
-                aux = aux.getNext();
+                aux = aux.getProximo();
             }
         }
         
@@ -41,15 +41,21 @@ public class ListaMesa {
         while (mesaRem != null) {
             if (mesaRem.getNumero() == numero) {
                 Mesa mesaAnt = this.getInicioLista();
-                while (mesaAnt != null) {
-                    if (mesaAnt.getNext() == mesaRem) {
-                        mesaAnt.setNext(mesaRem.getNext());
-                        return;
-                    } else
-                        mesaAnt = mesaAnt.getNext();
+                
+                if (mesaAnt == mesaRem) {
+                    this.setInicioLista(mesaRem.getProximo());
+                    return;
+                } else {
+                    while (mesaAnt != null) {
+                        if (mesaAnt.getProximo() == mesaRem) {
+                            mesaAnt.setProximo(mesaRem.getProximo());
+                            return;
+                        } else
+                            mesaAnt = mesaAnt.getProximo();
+                    }
                 }
             } else
-                mesaRem = mesaRem.getNext();
+                mesaRem = mesaRem.getProximo();
         }
     }
 
@@ -69,54 +75,4 @@ public class ListaMesa {
         this.fimLista = fimLista;
     }
     
-    
-    
-    /*
-    private Mesa inicioLista;
-    private Mesa fimLista;
-
-    public void add(Mesa novo) {
-            if (fimLista != null) {
-                    fimLista.next = novo;
-            } else {
-                    inicioLista = novo;
-            }
-            fimLista = novo;
-    }
-
-    public Mesa get(int index) {
-            Mesa aux = inicioLista;
-            for (int i = 0; i < index; i++) {
-                    aux = aux.next;
-            }
-            return aux;
-
-    }
-
-    public void remove(int index) {
-            Mesa aux = inicioLista;
-            if (index == 0) {
-                    inicioLista = inicioLista.next;
-            } else {
-                    for (int i = 0; i < index-1; i++) {
-                            aux = aux.next;
-                    }
-                    aux.next = aux.next.next;
-            }
-    }
-    
-    public StringBuilder listarMesasDispo() {
-        StringBuilder mesasDisp = new StringBuilder();
-        
-        if (inicioLista != null) {
-            Mesa aux = inicioLista;
-            while(aux != null) {
-                mesasDisp.append("\nNúmero: ").append(aux.getNumero());
-                aux = aux.getNext();
-            }
-        } else
-            mesasDisp.append("Não há mesas disponíveis");
-        
-        return mesasDisp;
-    }*/
 }

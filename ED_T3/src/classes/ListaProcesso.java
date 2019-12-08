@@ -17,7 +17,7 @@ public class ListaProcesso {
         if (this.getInicioLista() == null)
             this.setInicioLista(novo);
         else 
-            this.getFimLista().setNext(novo);
+            this.getFimLista().setProximo(novo);
         this.setFimLista(novo);
     }
     
@@ -26,15 +26,20 @@ public class ListaProcesso {
         while (procRem != null) {
             if (procRem.getId() == id) {
                 Processo procAnt = this.getInicioLista();
-                while (procAnt != null) {
-                    if (procAnt.getNext() == procRem) {
-                        procAnt.setNext(procRem.getNext());
-                        return procRem;
-                    } else
-                        procAnt = procAnt.getNext();
+                if (procAnt == procRem) {
+                    this.setInicioLista(procRem.getProximo());
+                    return procRem;
+                } else {
+                    while (procAnt != null) {
+                        if (procAnt.getProximo() == procRem) {
+                            procAnt.setProximo(procRem.getProximo());
+                            return procRem;
+                        } else
+                            procAnt = procAnt.getProximo();
+                    }
                 }
             } else
-                procRem = procRem.getNext();
+                procRem = procRem.getProximo();
         }
         return null;
     }
@@ -55,38 +60,4 @@ public class ListaProcesso {
         this.fimLista = fimLista;
     }
     
-    /*
-	private Processo inicioLista;
-	private Processo fimLista;
-
-	public void add(Processo novo) {
-		if (fimLista != null) {
-			fimLista.next = novo;
-		} else {
-			inicioLista = novo;
-		}
-		fimLista = novo;
-	}
-
-	public Processo get(int index) {
-		Processo aux = inicioLista;
-		for (int i = 0; i < index; i++) {
-			aux = aux.next;
-		}
-		return aux;
-
-	}
-
-	public void remove(int index) {
-		Processo aux = inicioLista;
-		if (index == 0) {
-			inicioLista = inicioLista.next;
-		} else {
-			for (int i = 0; i < index-1; i++) {
-				aux = aux.next;
-			}
-			aux.next = aux.next.next;
-		}
-	}
-*/
 }

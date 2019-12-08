@@ -24,17 +24,8 @@ public class Main {
         ListaProcesso analisandoProc = new ListaProcesso();
         FilaProcesso arquivamento = new FilaProcesso();
         
-        //Pilha entrada = new Pilha();
-        //Pilha analise = new Pilha();
-        //Pilha projeto = new Pilha();
-        //Pilha programacao = new Pilha();
-        
-        //ListaProcesso ltProc = new ListaProcesso();
-        //ListaMesa ltMesa = new ListaMesa();
-        
         Processo proc;
-        Funcionario func = null;
-        Mesa mesa = null;
+        Mesa mesa;
         
         String op;
         int analiseFin = 0;
@@ -46,7 +37,8 @@ public class Main {
         System.out.println("Sistema para o gerenciamento de equipe");
         
         do {
-            System.out.println("Opções: \n\t(0) Sair\n\t(1) Novo processo\n\t(2)Separar processos\n\t(3)Pegar processo\n\t(4)Ver mesas disponíveis\n\t(5) Finalizar análise\n\t(6)Arquivar processo\n\t(7) Relatório");
+            System.out.println("Opções: \n\t(0) Sair\n\t(1) Novo processo\n\t(2) Separar processos\n\t(3) Pegar processo\n\t(4) Ver mesas disponíveis"
+                    + "\n\t(5) Finalizar análise\n\t(6) Arquivar processo\n\t(7) Relatório\n\t(8) Teste referências mesas\n\t(9) Teste referências processo");
             op = in.nextLine();
             switch (op) {
                 case "0":
@@ -152,6 +144,46 @@ public class Main {
                             numElementos(programacao), numElementos(projeto),
                             numElementos(mesas));
                     break;
+                case "8":
+                    System.out.println(mesas.listarMesasDispo());
+                    
+                    System.out.print("Informe a mesa que deseja retirar: ");
+                    int mesRem = Integer.parseInt(in.nextLine());
+                    mesas.removerItem(mesRem);
+                    
+                    System.out.println("Lista de mesas disponíveis atualizada:");
+                    System.out.println(mesas.listarMesasDispo());
+                    break;
+                case "9":
+                    int NUMPROCESSOS = 3;
+                    ListaProcesso listaTeste = new ListaProcesso();
+                    Processo aux;
+                    
+                    System.out.printf("Insira %d processos:\n", NUMPROCESSOS);
+                    for (int i = 0; i < NUMPROCESSOS; i++) {
+                        aux = gerarProcesso();
+                        listaTeste.inserir(aux);
+                    }
+                    
+                    System.out.println("Lista dos processos inseridos");
+                    aux = listaTeste.getInicioLista();
+                    while (aux != null) {
+                        System.out.printf("ID: %d\tDescrição: %s\n", aux.getId(), aux.getDescricao());
+                        aux = aux.getProximo();
+                    }
+                    
+                    System.out.print("\nInforme o ID do processo a ser removido: ");
+                    int idTeste = Integer.parseInt(in.nextLine());
+                    listaTeste.removerItem(idTeste);
+                    
+                    System.out.println("\nLista dos processos atualizada");
+                    aux = listaTeste.getInicioLista();
+                    while (aux != null) {
+                        System.out.printf("ID: %d\tDescrição: %s\n", aux.getId(), aux.getDescricao());
+                        aux = aux.getProximo();
+                    }
+                    
+                    break;
                 default:
                     System.out.println("Opção inválida");
             }
@@ -199,13 +231,9 @@ public class Main {
     }
     
     public static void separarProcessos(FilaProcesso fila) {
-        //Pilha analise = new Pilha();
-        //Pilha projeto = new Pilha();
-        //Pilha programacao = new Pilha();
         System.out.println("e1");
         Processo aux = fila.getInicioFila();
         while (aux != null) {
-            System.out.println(aux.getTipo());
             switch (aux.getTipo()) {
                 case ANALISE:
                     analise.inserir(aux);
@@ -216,17 +244,13 @@ public class Main {
                 case PROJETO:
                     projeto.inserir(aux);
                     break;
+               
             }
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
-        System.out.println(fila.getInicioFila());
-        System.out.println(fila.getFimFila());
         
         fila.setInicioFila(null);
         fila.setFimFila(null);
-        
-        System.out.println(fila.getInicioFila());
-        System.out.println(fila.getFimFila());
     }
     
     public static Processo pegarProcesso(String tipo) {
@@ -251,7 +275,7 @@ public class Main {
         while (aux != null) {
             if (aux.getNumero() == num)
                 return false;
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
         
         return true;
@@ -263,7 +287,7 @@ public class Main {
         
         while (aux != null) {
             numElemen++;
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
         
         return numElemen;
@@ -275,7 +299,7 @@ public class Main {
         
         while (aux != null) {
             numElemen++;
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
         
         return numElemen;
@@ -287,7 +311,7 @@ public class Main {
         
         while (aux != null) {
             numElemen++;
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
         
         return numElemen;
@@ -299,41 +323,28 @@ public class Main {
         
         while (aux != null) {
             numElemen++;
-            aux = aux.getNext();
+            aux = aux.getProximo();
         }
         
         return numElemen;
     }
     
-/*
-    public static void separarProcessos(FilaFuncionario processos) {
-        for (int i = 0; i < processos.length; i++) {
-            if (TipoProcesso.ANALISE == processos.get(i).getTipo()) {
-                analise.add(processos.get(i));
-            } else if (TipoProcesso.PROGRAMACAO == processos.get(i).getTipo()) {
-                System.out.println("pro" + processos.get(i));
-                programacao.add(processos.get(i));
-            } else if (TipoProcesso.ANALISE == processos.get(i).getTipo()) {
-                projeto.add(processos.get(i));
-            }
+    public static Mesa testeRemoveMesa(int num) {
+        Mesa mesaRem = mesas.getInicioLista();
+        while (mesaRem != null) {
+            if (mesaRem.getNumero() == num) {
+                Mesa mesaAnt = mesas.getInicioLista();
+                while (mesaAnt != null) {
+                    if (mesaAnt.getProximo() == mesaRem) {
+                        mesaAnt.setProximo(mesaRem.getProximo());
+                        return mesaRem;
+                    } else
+                        mesaAnt = mesaAnt.getProximo();
+                }
+            } else
+                mesaRem = mesaRem.getProximo();
         }
+        return null;
     }
-
-    public static FilaFuncionario geraFilaDeProcessos(int rounds) {
-
-        FilaFuncionario filaDeProcessos = new FilaFuncionario();
-        for (int i = 0; i < rounds; i++) {
-            Processo processo = new Processo();
-            processo.geraAleatoriamente();
-            filaDeProcessos.add(processo);
-        }
-        return filaDeProcessos;
-    }
-    /*
-    public static void geraFuncionarios() {
-        for (int i = 0; i < array.length; i++) {
-
-        }
-    }
-    */
+    
 }
