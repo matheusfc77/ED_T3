@@ -50,8 +50,6 @@ public class Main {
                     entrada.inserir(proc);
                     break;
                 case "2":
-                    mostrarProc(entrada);
-                    System.out.println("\n-------------");
                     separarProcessos(entrada);
                     System.out.println("Processos separados com sucesso");
                     break;
@@ -235,55 +233,24 @@ public class Main {
     }
     
     public static void separarProcessos(FilaProcesso fila) {
-        System.out.println("e1");
         Processo aux = fila.proximo();
-        //aux.setProximo(null);
         
         while (aux != null) {
-            System.out.println(aux.getTipo());
             switch (aux.getTipo()) {
                 case ANALISE:
                     analise.inserir(aux);
-                    System.out.println("analise");
-                    System.out.println(aux.toString());
                     break;
                 case PROGRAMACAO:
                     programacao.inserir(aux);
-                    System.out.println("prog");
-                    System.out.println(aux.toString());
                     break;
                 case PROJETO:
                     projeto.inserir(aux);
-                    System.out.println("proj");
-                    System.out.println(aux.toString());
                     break;
                
             }
-            //aux = aux.getProximo();
             aux = fila.proximo();
-           // aux.setProximo(null);
-        }/*
-        
-        System.out.println(aux.getTipo());
-        switch (aux.getTipo()) {
-            case ANALISE:
-                analise.inserir(aux);
-                System.out.println("analise");
-                System.out.println(aux.toString());
-                break;
-            case PROGRAMACAO:
-                programacao.inserir(aux);
-                System.out.println("prog");
-                System.out.println(aux.toString());
-                break;
-            case PROJETO:
-                projeto.inserir(aux);
-                System.out.println("proj");
-                System.out.println(aux.toString());
-                break;
-
         }
-        */
+        
         fila.setInicioFila(null);
         fila.setFimFila(null);
     }
