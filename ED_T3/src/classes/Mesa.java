@@ -11,8 +11,7 @@ package classes;
  */
 public class Mesa {
     private int numero;
-    private Funcionario funcionario;
-    protected Mesa next;
+    protected Mesa proximo;
 
     public int getNumero() {
         return numero;
@@ -22,26 +21,12 @@ public class Mesa {
         this.numero = numero;
     }
 
-    public Mesa getNext() {
-        return next;
+    public Mesa getProximo() {
+        return proximo;
     }
 
-    public void setNext(Mesa next) {
-        this.next = next;
-    }
-
-    /**
-     * @return the funcionario
-     */
-    public Funcionario getFuncionario() {
-            return funcionario;
-    }
-
-    /**
-     * @param funcionario the funcionario to set
-     */
-    public void setFuncionario(Funcionario funcionario) {
-            this.funcionario = funcionario;
+    public void setProximo(Mesa proximo) {
+        this.proximo = proximo;
     }
 	
 }

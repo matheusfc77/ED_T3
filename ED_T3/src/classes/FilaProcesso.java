@@ -17,14 +17,14 @@ public class FilaProcesso {
         if (this.getInicioFila() == null)
             this.setInicioFila(novo);
         else
-            this.getFimFila().setNext(novo);
+            this.getFimFila().setProximo(novo);
         this.setFimFila(novo);
     }
     
     public Processo proximo() {
         if (this.getInicioFila() != null) {
             Processo prox = this.getInicioFila();
-            this.setInicioFila(this.getInicioFila().getNext());
+            this.setInicioFila(this.getInicioFila().getProximo());
             return prox;
         }
         return null;
@@ -45,71 +45,5 @@ public class FilaProcesso {
     public void setFimFila(Processo fimFila) {
         this.fimFila = fimFila;
     }
-    
-    
-    
-    /*
-    public int length;
-    public Processo older;
-    public Processo newer;
 
-    public void add(Processo Processo) {
-
-            if (length == 0) {
-                    newer = older = Processo;
-            }
-            //newer.next = new Processo();
-            newer.next = Processo;
-            newer.next.before = newer;
-            newer = newer.next;
-            length++;
-    }
-
-    public void remove() {
-
-            older = older.next;
-            length--;
-    }
-
-    public Processo getAndRemove() {
-            Processo processo = older;
-            older = processo.next;
-            return processo;
-    }
-
-    public Processo lastRow() {
-            return older;
-    }
-
-    public Processo newerRow() {
-            return newer;
-    }
-
-
-    public Processo get(int index) {
-            Processo processo = older;
-            for (int i = 0; processo != null && i < index; i++) 
-                    processo = processo.next;
-            return processo;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        Processo processo = older;
-        builder.append("[");
-        try {
-            for (int i = 0; i < length; i++) {
-                builder.append("{");
-                builder.append(processo);
-                builder.append("}");
-                processo = processo.next;
-            }
-        } catch (Exception e) {
-                // TODO: handle exception
-        }
-
-        builder.append("]");
-        return builder.toString();
-    }*/
 }
