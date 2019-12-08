@@ -38,7 +38,8 @@ public class Main {
         
         do {
             System.out.println("Opções: \n\t(0) Sair\n\t(1) Novo processo\n\t(2) Separar processos\n\t(3) Pegar processo\n\t(4) Ver mesas disponíveis"
-                    + "\n\t(5) Finalizar análise\n\t(6) Arquivar processo\n\t(7) Relatório\n\t(8) Teste referências mesas\n\t(9) Teste referências processo");
+                    + "\n\t(5) Finalizar análise\n\t(6) Arquivar processo\n\t(7) Relatório\n\t(8) Teste referências mesas\n\t(9) Teste referências processo"
+                    + "\n\t(10) Mostrar listas dos processos");
             op = in.nextLine();
             switch (op) {
                 case "0":
@@ -49,6 +50,8 @@ public class Main {
                     entrada.inserir(proc);
                     break;
                 case "2":
+                    mostrarProc(entrada);
+                    System.out.println("\n-------------");
                     separarProcessos(entrada);
                     System.out.println("Processos separados com sucesso");
                     break;
@@ -165,24 +168,25 @@ public class Main {
                         listaTeste.inserir(aux);
                     }
                     
-                    System.out.println("Lista dos processos inseridos");
-                    aux = listaTeste.getInicioLista();
-                    while (aux != null) {
-                        System.out.printf("ID: %d\tDescrição: %s\n", aux.getId(), aux.getDescricao());
-                        aux = aux.getProximo();
-                    }
+                    System.out.println("Lista dos processes inseridos:");
+                    mostrarProc(listaTeste);
                     
                     System.out.print("\nInforme o ID do processo a ser removido: ");
                     int idTeste = Integer.parseInt(in.nextLine());
                     listaTeste.removerItem(idTeste);
                     
                     System.out.println("\nLista dos processos atualizada");
-                    aux = listaTeste.getInicioLista();
-                    while (aux != null) {
-                        System.out.printf("ID: %d\tDescrição: %s\n", aux.getId(), aux.getDescricao());
-                        aux = aux.getProximo();
-                    }
+                    mostrarProc(listaTeste);
                     
+                    break;
+                case "10":
+                    mostrarProc(entrada);
+                    System.out.println("\n-------------");
+                    mostrarProc(analise);
+                    System.out.println("\n-------------");
+                    mostrarProc(programacao);
+                    System.out.println("\n-------------");
+                    mostrarProc(projeto);
                     break;
                 default:
                     System.out.println("Opção inválida");
@@ -232,23 +236,54 @@ public class Main {
     
     public static void separarProcessos(FilaProcesso fila) {
         System.out.println("e1");
-        Processo aux = fila.getInicioFila();
+        Processo aux = fila.proximo();
+        //aux.setProximo(null);
+        
         while (aux != null) {
+            System.out.println(aux.getTipo());
             switch (aux.getTipo()) {
                 case ANALISE:
                     analise.inserir(aux);
+                    System.out.println("analise");
+                    System.out.println(aux.toString());
                     break;
                 case PROGRAMACAO:
                     programacao.inserir(aux);
+                    System.out.println("prog");
+                    System.out.println(aux.toString());
                     break;
                 case PROJETO:
                     projeto.inserir(aux);
+                    System.out.println("proj");
+                    System.out.println(aux.toString());
                     break;
                
             }
-            aux = aux.getProximo();
-        }
+            //aux = aux.getProximo();
+            aux = fila.proximo();
+           // aux.setProximo(null);
+        }/*
         
+        System.out.println(aux.getTipo());
+        switch (aux.getTipo()) {
+            case ANALISE:
+                analise.inserir(aux);
+                System.out.println("analise");
+                System.out.println(aux.toString());
+                break;
+            case PROGRAMACAO:
+                programacao.inserir(aux);
+                System.out.println("prog");
+                System.out.println(aux.toString());
+                break;
+            case PROJETO:
+                projeto.inserir(aux);
+                System.out.println("proj");
+                System.out.println(aux.toString());
+                break;
+
+        }
+        */
         fila.setInicioFila(null);
         fila.setFimFila(null);
     }
@@ -329,22 +364,27 @@ public class Main {
         return numElemen;
     }
     
-    public static Mesa testeRemoveMesa(int num) {
-        Mesa mesaRem = mesas.getInicioLista();
-        while (mesaRem != null) {
-            if (mesaRem.getNumero() == num) {
-                Mesa mesaAnt = mesas.getInicioLista();
-                while (mesaAnt != null) {
-                    if (mesaAnt.getProximo() == mesaRem) {
-                        mesaAnt.setProximo(mesaRem.getProximo());
-                        return mesaRem;
-                    } else
-                        mesaAnt = mesaAnt.getProximo();
-                }
-            } else
-                mesaRem = mesaRem.getProximo();
+    public static void mostrarProc(ListaProcesso lista) {
+        Processo aux = lista.getInicioLista();
+        while (aux != null) {
+            System.out.printf(aux.toString());
+            aux = aux.getProximo();
         }
-        return null;
     }
     
+    public static void mostrarProc(FilaProcesso fila) {
+        Processo aux = fila.getInicioFila();
+        while (aux != null) {
+             System.out.printf(aux.toString());
+            aux = aux.getProximo();
+        }
+    }
+    
+    public static void mostrarProc(Pilha pilha) {
+        Processo aux = pilha.getTopoPilha();
+        while (aux != null) {
+             System.out.printf(aux.toString());
+            aux = aux.getProximo();
+        }
+    }
 }

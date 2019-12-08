@@ -13,6 +13,7 @@ public class Pilha {
     private Processo topoPilha;
     
     public void inserir(Processo novo) {
+        System.out.println("####" + novo.getDescricao() + "#####");
         if (this.getTopoPilha() == null)
             this.setTopoPilha(novo);
         else {

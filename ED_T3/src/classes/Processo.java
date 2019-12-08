@@ -49,16 +49,10 @@ public class Processo {
     public int getId() {
         return id;
     }
-    
+
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Processo [");
-        if (tipo != null) {
-            builder.append("tipo=");
-            builder.append(tipo);
-        }
-        builder.append("]");
-        return builder.toString();
+        return "Processo{" + "id=" + id + ", descricao=" + descricao + ", tipo=" + tipo + ", proximo=" + proximo + '}';
     }
+    
 }
